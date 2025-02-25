@@ -21,7 +21,7 @@ app.MapPost("/api/set-session", (Func<HttpContext, Task<IResult>>)SetSession);
 app.MapGet("/api/get-session", (Func<HttpContext, Task<IResult>>)GetSession);
 app.MapDelete("/api/clear-session", (Func<HttpContext, Task<IResult>>)ClearSession);
 
-async Task<IResult> SetSession(HttpContext context)
+static async Task<IResult> SetSession(HttpContext context)
 {
     if (context.Session.GetString("email") != null)
     {
@@ -32,7 +32,7 @@ async Task<IResult> SetSession(HttpContext context)
     return Results.Ok(context.Session.GetString("email"));
 }
 
-async Task<IResult> GetSession(HttpContext context)
+static async Task<IResult> GetSession(HttpContext context)
 {
     Console.WriteLine("GetSession is called..Getting session");
     var email = await Task.Run(() => context.Session.GetString("email"));
@@ -43,7 +43,7 @@ async Task<IResult> GetSession(HttpContext context)
     return Results.Ok(email);
 }
 
-async Task<IResult> ClearSession(HttpContext context)
+static async Task<IResult> ClearSession(HttpContext context)
 {
     Console.WriteLine("ClearSession is called..Clearing session");
     await Task.Run(context.Session.Clear);
