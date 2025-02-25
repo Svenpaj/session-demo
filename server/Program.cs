@@ -17,9 +17,9 @@ app.UseSession();
 
 app.MapGet("/", () => "Hello World!");
 
-app.MapPost("/api/set-session", (Delegate)SetSession);
-app.MapGet("/api/get-session", (Delegate)GetSession);
-app.MapDelete("/api/clear-session", (Delegate)ClearSession);
+app.MapPost("/api/set-session", (Func<HttpContext, Task<IResult>>)SetSession);
+app.MapGet("/api/get-session", (Func<HttpContext, Task<IResult>>)GetSession);
+app.MapDelete("/api/clear-session", (Func<HttpContext, Task<IResult>>)ClearSession);
 
 async Task<IResult> SetSession(HttpContext context)
 {
